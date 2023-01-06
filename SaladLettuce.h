@@ -1,0 +1,52 @@
+#ifndef SaladLettuce_h__
+#define SaladLettuce_h__
+
+#include "GameObject.h"
+#include "Define.h"
+
+BEGIN(Engine)
+
+class CStaticMesh;
+class CTransform;
+class CRenderer;
+class CCalculator;
+class COptimization;
+class CShader;
+
+END
+class CSaladLettuce : public CGameObject
+{
+private:
+	explicit CSaladLettuce(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CSaladLettuce(const CSaladLettuce& rhs);
+	virtual ~CSaladLettuce(void);
+
+public:
+	virtual HRESULT Ready_Object(void) override;
+	virtual _int Update_Object(const _float& fTimeDelta) override;
+	virtual void Render_Object(void) override;
+
+private:
+	HRESULT					Add_Component(void);
+	void					SetUp_OnTerrain(void);
+	_bool					Collision_ToObject(const _tchar* pLayerTag, const _tchar* pObjTag);
+	HRESULT					SetUp_ConstantTable(LPD3DXEFFECT& pEffect);
+private:	
+	CStaticMesh*			m_pMeshCom			= nullptr;
+	CTransform*				m_pTransformCom		= nullptr;
+	CRenderer*				m_pRendererCom		= nullptr;
+	CCalculator*			m_pCalculatorCom	= nullptr;
+	COptimization*			m_pOptimizationCom	= nullptr;
+	CShader*				m_pShaderCom = nullptr;
+
+	_int					m_iInCount = 0;
+
+public:
+	static CSaladLettuce*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	virtual void		Free(void);
+};
+
+
+#endif // SaladLettuce_h__
